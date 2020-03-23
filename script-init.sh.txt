@@ -1,0 +1,48 @@
+#! /bin/bash
+#Ce script prend un paramètre parmi deux possibilités :
+#	clean : remet le compte stagiaire à zéro
+#	init : 	initialise le PC en changeant le nom de la machine et en ajoutant un compte stagiaire
+
+if [ $1 = 'clean' ]
+then
+	#suppression de l'utilisateur stagiaire et de ses documents
+	sudo deluser --remove-home stagiaire
+
+	#Ajout d'un nouveau compte stagiaire
+	sudo useradd -m stagiaire
+	echo -e "mdpstagiaire\nmdpstagiaire" | sudo passwd stagiaire
+	echo -e '\nUtilisateur stagiaire remis à zéro.'
+fi
+
+if [ $1 = 'init' ]
+then
+	#Récupération de l'adresse ip
+	adresseip= `hostname -I`
+	salle=`echo $adresseip | cut -d . -f 3`
+	numero=`echo $adresseip | cut -d . -f 4`
+
+	#Mise en place d'un nom unique avec hostname en fonction de adresse ip du PC
+	echo -e "\nLe troisième champs est $salle\n le quatrième $numero\n"
+
+	if [ $salle = 100 ]
+	then
+		#On modifie le nom de la machine hôte par abeille
+		# + numero unique
+		sudo hostnamectl set-hostname "abeille-$numero"
+		echo "Le nom de la machine hôte a été modifié."
+	fi
+
+	if [ $salle = 101 ]
+	then
+		#On modifie le nom de la machine hôte par baobab
+		# + numero unique
+		sudo hostnamectl set-hostname "baobab-$numero"
+		echo "Le nom de la machine hôte a été modifié."
+	fi
+
+	#Compte stagiaire à ajouter
+	sudo useradd -m stagiaire
+
+	#Configuration du mot de passe de stagiaire
+	echo -e "mdpstagiaire\nmdpstagiaire" | sudo passwd stagiaire
+fi
