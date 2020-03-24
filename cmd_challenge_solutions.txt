@@ -1,0 +1,55 @@
+on https://cmdchallenge.com/
+
+challenge "search_for_files_containing_string" : List the name of file that contains "500" in the current
+directory, note the path
+# option r : recursivity
+# argument '.' : current directory
+# command cut : starting the 3rd character, show the rest of each string
+> fgrep -lr '500' . | cut -c 3-
+
+
+challenge "search_for_files_by_extension" : Print the relative file paths, one path per line for all
+filenames that start with "access.log" in the current directory
+> ls -d access.log*
+
+challenge "search_for_string_in_files_recursive" : Print all matching lines (without the filename
+or the file path) in all files under the current directory that start with "access.log" that contain
+the string "500". Note that there are no files named "access.log" in the current directory, you will 
+need to search recursively.
+> for file in `find -name access.log*`; do grep -R -h 500 $file;done
+# On peut utiliser une boucle for en commande !!!!!!!
+
+challenge "extract_ip_addresses" : Extract all IP addresses from files that start with "access.log" 
+# printing one IP address per line.
+# find /var -name "access.log*" : affiche les chemins des fichiers access.log*
+# cut -d " " -f 1 filename : affiche l'élément 1 de chaque ligne; la sépration des éléments est " "
+> for file in `find -name access.log*`; do cut -d " " -f 1 $file;done
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////
+
+challenge "delete_files" : 
+# Delete all files and directories
+> rm -r /*
+
+challenge "count_files" : 
+# Count all files in current directory
+> ls -A | wc -l
+
+challenge "simple_sort" : 
+# Print the contents of access.log sorted.
+> sort access.log
+
+challenge "count_string_in_line" : 
+#Print the number of lines in access.log that contain the string "GET".
+> grep "GET" access.log | wc -l
+
+challenge "split on a char" :
+# The file split-me.txt contains a list of numbers separated by a ';' character.
+# Split the numbers on the ';' character, one number per line.
+# tr ';' '\n' < split-me.txt : change les ; en saut à la ligne
+> cat split-me.txt|tr ";" "\n "
+
+
+challenge "print_number_sequence" :
+# print the number 1 to 100 separated by spaces
+# for((i=1;i<=100;i+=1)); do echo "$i "; done ////// Affiche un nombre par ligne...
