@@ -49,7 +49,24 @@ challenge "split on a char" :
 # tr ';' '\n' < split-me.txt : change les ; en saut à la ligne
 > cat split-me.txt|tr ";" "\n "
 
-
 challenge "print_number_sequence" :
 # print the number 1 to 100 separated by spaces
-# for((i=1;i<=100;i+=1)); do echo "$i "; done ////// Affiche un nombre par ligne...
+# for i in $( seq 1 100 ); do printf "%d " "$i"; done // fonctionne mais non validé
+> echo {1..100} //////// je me complique la viiiieeeee
+
+challenge "remove_files_with_extension" :
+# There are files in this challenge with different file extensions.
+# Remove all files with the .doc extension recursively in the current working directory.
+> find . -name "*.doc" -type f -delete
+
+challenge "replace_text_in_files"
+# This challenge has text files (with a .txt extension) that contain the phrase "challenges are difficult".
+# Delete this phrase recursively from all text files. Note that some files are in subdirectories so you will
+# need to search for them
+# $(find . -name "*.txt" -exec grep "challenges are difficult" '{}' \; -print) // affiche le contenu des fichiers
+> sed -i -- 's/challenges are difficult//'   ///// info : s/word// is a simple regex that says replace word with <blank>
+> find . -name "*.txt" -type f -print //affiche le chemin des fichiers
+
+> sed -i -- 's/challenges are difficult//' $(find . -name "*.txt" -type f -print)
+	problème : les dossiers ont un espace séparant les noms donc sed ne trouve pas le chemin
+> for i in ./**/*.txt; do sed -i "s/challenges are difficult//g" "$i"; done
