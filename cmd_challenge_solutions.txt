@@ -22,7 +22,7 @@ need to search recursively.
 challenge "extract_ip_addresses" : Extract all IP addresses from files that start with "access.log" 
 # printing one IP address per line.
 # find /var -name "access.log*" : affiche les chemins des fichiers access.log*
-# cut -d " " -f 1 filename : affiche l'élément 1 de chaque ligne; la sépration des éléments est " "
+# cut -d " " -f 1 filename : affiche l'Ã©lÃ©ment 1 de chaque ligne; la sÃ©pration des Ã©lÃ©ments est " "
 > for file in `find -name access.log*`; do cut -d " " -f 1 $file;done
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -46,12 +46,12 @@ challenge "count_string_in_line" :
 challenge "split on a char" :
 # The file split-me.txt contains a list of numbers separated by a ';' character.
 # Split the numbers on the ';' character, one number per line.
-# tr ';' '\n' < split-me.txt : change les ; en saut à la ligne
+# tr ';' '\n' < split-me.txt : change les ; en saut Ã  la ligne
 > cat split-me.txt|tr ";" "\n "
 
 challenge "print_number_sequence" :
 # print the number 1 to 100 separated by spaces
-# for i in $( seq 1 100 ); do printf "%d " "$i"; done // fonctionne mais non validé
+# for i in $( seq 1 100 ); do printf "%d " "$i"; done // fonctionne mais non validÃ©
 > echo {1..100} //////// je me complique la viiiieeeee
 
 challenge "remove_files_with_extension" :
@@ -68,5 +68,22 @@ challenge "replace_text_in_files"
 > find . -name "*.txt" -type f -print //affiche le chemin des fichiers
 
 > sed -i -- 's/challenges are difficult//' $(find . -name "*.txt" -type f -print)
-	problème : les dossiers ont un espace séparant les noms donc sed ne trouve pas le chemin
+	problÃ¨me : les dossiers ont un espace sÃ©parant les noms donc sed ne trouve pas le chemin
 > for i in ./**/*.txt; do sed -i "s/challenges are difficult//g" "$i"; done
+
+challenge "sum_all_numbers"
+# The file sum-me.txt has a list of numbers, one per line. Print the sum of these numbers.
+# awk is a programming langage and gawk is its implementation on GNU
+> awk '{ sum += $1 }; END { print sum }' sum-me.txt
+
+challenge "just_the_files"
+# Print all files in the current directory recursively without the leading directory path.
+# Not a solution : print file's name : ls -p | grep -v /
+# Recursive means that Linux or Unix command works with the contains of directories, and if a directory has subdirectories 
+# and files, the command works on those files too (recursively). 
+> find . -type f -exec basename {} \;
+# Basename is a command that returns only the name of a file, without its path
+
+challenge "remove_extensions_from_files"
+# Rename all files removing the extension from them in the current directory recursively.
+# Command rename or mv
