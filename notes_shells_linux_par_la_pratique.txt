@@ -1,0 +1,12 @@
+# Prise de notes et réalisation d'exercices lors de la lecture du livre "Shells Linux et Unix par la pratique.pdf"
+# Solutions en fin de livre : p.255
+
+
+1.1 p.23
+Identifier les différentes versions du shell : ls /bin/*sh*
+La variable PATH peut être modifiée temporairement dans le terminal actif. Fermer le terminal réinitialise la valeur de $PATH.
+
+p.30 Analyse d'un script
+> La commande "getops" permet d'analyse les arguments qui se trouvent sur la ligne de commande. Cette fonction renvoie une valeur vraie tant qu'elle trouve qui est contenue dans une liste.
+P.39 : exercices de modification du script rm_secure.sh
+
